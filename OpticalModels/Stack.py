@@ -9,7 +9,7 @@
 #WITHOUT ANY WARRANTY; without even the implied warranty of
 #MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See #the GNU General Public License for more details.  #You should have received a copy of the GNU General Public
 #License along with NonlinearModel.  If not, see
-#<http://www.gnu.org/licenses/>.  
+#<http://www.gnu.org/licenses/>.
 import Layer
 import numpy as np
 import scipy as sp
@@ -55,7 +55,7 @@ class Stack:
          Ms=np.dot(self.ambientLayer.transferMatrixS(layers[0],layers[1]),Ms)
       else:
          prevLayer=layers[0]
-         #Skip the first one since this is already 
+         #Skip the first one since this is already
          #previous layer and skip last
          for layer in layers[1:-1]:
             Mp=np.dot(layer.transferMatrixP(prevLayer,layer),Mp)
@@ -73,7 +73,7 @@ class Stack:
          Mp=np.dot(self.substrate.transferMatrixP(prevLayer,layers[-1]),Mp)
          Ms=np.dot(self.substrate.transferMatrixS(prevLayer,layers[-1]),Ms)
       return Ms,Mp
-   
+
    #NOTE This ignores thickness of first layer and last layer
    def __cummulativeThickness(self,layers,layer):
       d=0
@@ -85,7 +85,7 @@ class Stack:
 
 
    #Get the transmission for substrate towards ambient in the case
-   #that there are no source terms. The system is lit by a source far 
+   #that there are no source terms. The system is lit by a source far
    #inside the semi infinite substrate
    def __getTransRef(self,pol=1):
       M=self.__getTransferMatrix(np.r_[[self.ambientLayer],self.layers,[self.substrate]]\
@@ -171,7 +171,7 @@ class Stack:
    def getEpsilonPsi(self):
       Ms,Mp=self.__getTransferMatrix(np.r_[[self.substrate],
          self.layers,[self.ambientLayer]]
-                ,directionUp=False)
+                ,directionUp=True)
       rs=Ms[0,1]/Ms[1,1]
       rp=Mp[0,1]/Mp[1,1]
       rho=rp/rs
@@ -182,7 +182,7 @@ class Stack:
    def getTransmission(self):
       Ms,Mp=self.__getTransferMatrix(np.r_[[self.substrate],
          self.layers,[self.ambientLayer]]
-                ,directionUp=False)
+                ,directionUp=True)
       ts=1./Ms[1,1]
       tp=1./Mp[1,1]
 

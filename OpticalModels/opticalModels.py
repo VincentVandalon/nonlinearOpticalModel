@@ -148,7 +148,7 @@ class SiliconJellison(Material):
 
    @classmethod
    def N(self,lamb):
-      return np.sqrt(0j+self.eps(lamb)) 
+      return np.sqrt(0j+self.eps(lamb))
 
    @classmethod
    def eps(self,lamb):
@@ -162,10 +162,10 @@ class SiliconJellison(Material):
 class SiOSell(OpticalResponseMaterial):
    @classmethod
    def N(self,lamb):
-      #Sellmeier[eV_, A_, B_, ampIR_, \[Epsilon]inf_] = 
+      #Sellmeier[eV_, A_, B_, ampIR_, \[Epsilon]inf_] =
       #Sellmeier[eV, 1.121, 0.09140, 0.01, 1.0] ;(* thermal SiO2 *)
-      
-      #From Nick for fits 
+
+      #From Nick for fits
       SiO=Sellmeier(1.121,0.0914,0.01,1.)
       #SiO=SellmeierCompleteEase(.1,.28675,0.01338,2.018)
       return np.vectorize(SiO.N)(lamb)
@@ -198,20 +198,20 @@ class Al2O3(OpticalResponseMaterial):
       return np.vectorize(Al2O3.N)(lamb)
 
 class Tabulated(OpticalResponseMaterial):
-   def __init__(self,fil=''):  
+   def __init__(self,fil=''):
       if fil =='':
-         ndata=tkFileDialog.askopenfilename(parent=root,title='Please select the file with the tabulated n and k values')      
+         ndata=tkFileDialog.askopenfilename(parent=root,title='Please select the file with the tabulated n and k values')
          self.ndata=np.loadtxt(ndata)
       else:
          self.ndata=np.loadtxt(fil)
-   
+
    def N(self,lamb):
       ndata=self.ndata
       n=InterpolatedUnivariateSpline(ndata[:,0],ndata[:,1])
       k=InterpolatedUnivariateSpline(ndata[:,0],ndata[:,2])
       return n(lamb*1E6)+1.j*k(lamb*1E6)
 
-      
+
 class ArGas(OpticalResponseMaterial):
    @classmethod
    def N(self,lamb):

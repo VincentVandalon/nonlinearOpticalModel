@@ -59,7 +59,7 @@ for angl in [70]:
    plt.ylabel('$\Psi$ ($\pi$ Rad)')
 
    plt.subplot(212)
-   plt.plot(deltas[:,0]*1E9,constrainBetween(deltas[:,1]/np.pi),marker='')
+   plt.plot(deltas[:,0]*1E9,constrainBetween(-deltas[:,1]/np.pi),marker='')
    plt.ylabel('$\Delta$ ($\pi$ Rad)')
    plt.ylim(-.1,2.1)
    plt.xlabel('Wavelength (nm)')
@@ -91,7 +91,7 @@ def errFun(p):
       psi,delta=fitSystem.getEpsilonPsi()
 
       psiErr=np.r_[psiErr,compuSiO2[i,1]/180.-psi/np.pi]
-      deltaErr=np.r_[deltaErr,constrainBetween(compuSiO2[i,2]/180.)-constrainBetween(delta/np.pi)]
+      deltaErr=np.r_[deltaErr,constrainBetween(compuSiO2[i,2]/180.)-constrainBetween(-delta/np.pi)]
       i+=1
 
    return psiErr,deltaErr
